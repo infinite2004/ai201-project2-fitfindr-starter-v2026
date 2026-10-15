@@ -1,0 +1,23 @@
+test_blank_card_is_not_success (test_agent.LoopTests.test_blank_card_is_not_success) ... ok
+test_five_empty_searches_never_call_model_tools (test_agent.LoopTests.test_five_empty_searches_never_call_model_tools) ... ok
+test_five_matching_queries_pass_stored_state_to_both_tools (test_agent.LoopTests.test_five_matching_queries_pass_stored_state_to_both_tools) ... ok
+test_loop_limit_checked_before_next_call (test_agent.LoopTests.test_loop_limit_checked_before_next_call) ... ok
+test_missing_generation_stops_before_card (test_agent.LoopTests.test_missing_generation_stops_before_card) ... ok
+test_model_error_preserves_prior_state (test_agent.LoopTests.test_model_error_preserves_prior_state) ... ok
+test_common_queries (test_agent.QueryTests.test_common_queries) ... ok
+test_blank_responses_are_explicit (test_tools.GenerationTests.test_blank_responses_are_explicit) ... ok
+test_card_receives_outfit_and_listing (test_tools.GenerationTests.test_card_receives_outfit_and_listing) ... ok
+test_empty_inputs_do_not_call_model (test_tools.GenerationTests.test_empty_inputs_do_not_call_model) ... ok
+test_empty_wardrobe_asks_for_general_advice (test_tools.GenerationTests.test_empty_wardrobe_asks_for_general_advice) ... ok
+test_model_failure_is_not_disguised_as_success (test_tools.GenerationTests.test_model_failure_is_not_disguised_as_success) ... ok
+test_populated_wardrobe_reaches_adapter_without_mutating_inputs (test_tools.GenerationTests.test_populated_wardrobe_reaches_adapter_without_mutating_inputs) ... ok
+test_all_three_filters_together (test_tools.SearchTests.test_all_three_filters_together) ... ok
+test_empty_and_impossible_queries (test_tools.SearchTests.test_empty_and_impossible_queries) ... ok
+test_price_ceilings_include_known_items (test_tools.SearchTests.test_price_ceilings_include_known_items) ... ok
+test_ranking_stability_limit_and_null_brand (test_tools.SearchTests.test_ranking_stability_limit_and_null_brand) ... ok
+test_size_boundaries_and_alternatives (test_tools.SearchTests.test_size_boundaries_and_alternatives) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.008s
+
+OK

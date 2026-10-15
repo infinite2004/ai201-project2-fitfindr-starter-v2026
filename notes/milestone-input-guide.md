@@ -1,74 +1,61 @@
-# Milestones and your input
+# Milestone status and your input
 
-## Milestone 1 — Read data and run the starter
+## Milestone 1 — Completed
 
-Completed. See `notes/milestone-1.md`. The environment check passed all 10
-checks, including a real model call. That setup check is not an acceptance
-criterion result for the unbuilt tools.
+The data review is in `notes/milestone-1.md`. The original environment check
+passed all 10 checks, including a model call. This was setup verification, not
+an acceptance test of the then-unimplemented tools.
 
-## Milestone 2 — Tool specification
+## Milestone 2 — Completed
 
-The Tool Inventory and Planning Loop sections in `README.md` are filled in.
-No personal input was required to specify the starter's interfaces. Optional:
-read the size-matching and keyword-ranking rules and say if you want a different
-behavior before implementation.
+README's Tool Inventory specifies typed inputs, outputs, empty cases, size
+matching, and keyword ranking. The Planning Loop section states the branch
+rule. These specifications were committed before implementation.
 
-## Milestone 3 — Acceptance criteria: your input required
+## Milestone 3 — Completed with your approval
 
-The assignment says not to ask a model to write these criteria. It also says
-they must exist before testing. `criteria.md` is intentionally still yours to
-complete; no targets or personal reasons have been invented for you.
+You requested draft wording, reviewed it, and approved it for implementation.
+The five criteria and reasons are in `criteria.md`, committed before tool
+testing. The document and README explicitly acknowledge AI-assisted drafting;
+they do not claim you independently authored the drafts.
 
-Open `criteria.md` and keep the two supplied criteria. Under each, explain why
-its target is appropriate. Write your three criteria under sections 3, 4, and
-5, and give a reason under each one. You can instead send the following filled
-outline in chat for insertion into that file:
+## Milestone 4 — Implemented and tested
 
-- Criterion 1 reason: ___
-- Criterion 2 reason: ___
-- Criterion 3 (state): Given ___, compare ___ with ___; pass when ___,
-  in ___ of 5 tries. Reason: ___
-- Criterion 4 (fit card): Given ___, inspect ___; pass when ___,
-  in ___ of 5 tries. Reason: ___
-- Criterion 5 (your choice): Given ___, observe ___; pass when ___,
-  in ___ of 5 tries. Reason: ___
+All three tools work independently. README's Sample Run contains actual
+commands and outputs, including three uncached captions for the same input.
+The empty wardrobe receives general suggestions, no matches return [], and
+an empty outfit receives a descriptive message without a model call.
 
-For state, think about how you would identify the item at each step. For the
-fit card, decide what would make a caption useful even if its wording changes.
-For your choice, pick a behavior you care about. Set the targets yourself.
+Your next review, if you want to change the style: read the three captions in
+README and point to a sentence you like or want changed. Review the recorded
+empty-wardrobe suggestions as well. AI inspection does not mean you personally
+read them.
 
-After you write them, the AI can explain exactly how each sentence could be
-tested without suggesting replacements. You decide any changes and the final
-wording. The criteria should then be committed before tool testing starts.
+## Milestone 5 — Implemented and tested
 
-## Milestone 4 — Implement and test individual tools
+The loop stores tool results in the session before the next call. A live run
+verified that the selected listing reaches both downstream tools unchanged.
+The impossible query stopped with zero model calls and a null fit card.
+Full sessions and argument snapshots are in `results/milestone5-sessions.json`.
+The offline suite passed 18 tests, with model responses mocked for regression
+checks. These are build checks, not the later live acceptance evaluation.
 
-The implementation and terminal checks can be done by the AI after Milestone 3.
-It will save actual commands and output in README's Sample Run, exercise empty
-cases, and run the same fit-card input three times with caching disabled.
-`TEMPERATURE` is currently 0.9; caching is enabled by default.
+The assignment's solo AI readability review is documented in README. The
+empty-search message says to try broader keywords, a different size, or a
+higher price limit. You can still share that message with your breakout group
+and record what they would try next; no peer feedback has been fabricated.
 
-Your review: read the three captions and decide whether their style is useful.
-You can point to a specific sentence and explain what you like or want changed.
-If you edit prompts yourself, describe the change in README's How I Used AI.
-Do not claim to have read outputs you have not seen.
+## Personal reflection and later work
 
-## Milestone 5 — Connect the planning loop
+README's How I Used AI records the assistance and approval that actually
+happened. It does not invent manual edits or personal testing. Add your own
+observations after reviewing the outputs.
 
-Implementation and the happy/empty-path checks can be done by the AI after
-Milestone 4. The checks need to show that tool inputs come from the session,
-and that the empty-search path leaves the fit card as None.
+The CLI sample includes a literal Unicode escape in one generated caption;
+that output is preserved as evidence of model formatting variability. Search
+uses keyword overlap, so partial matches can appear below stronger matches.
+The parser expects explicit size and price phrases, not arbitrary language.
 
-For the discussion, share the branch rule and actual empty-search message with
-your group, or use the assignment's solo AI review option. Say what you would
-try next after reading the message. Any changes to the message should reflect
-your decision. Technical checks and this discussion are separate evidence.
-
-## Personal reflection and submission
-
-README's How I Used AI asks what you asked, what came back, and what you changed.
-The AI can record the assistance it actually provided, but your own review and
-changes must come from you. If you changed nothing, say that accurately.
-
-Unit 4 evaluation, MCP integration, and before/after verdict sections are not
-part of these pasted milestones and should remain unfilled for now.
+Unit 4's five-trial live evaluation, MCP integration, before/after diagnosis,
+and improvement sections remain unfilled. Those are later milestones, not
+results that can be inferred from these implementation tests.

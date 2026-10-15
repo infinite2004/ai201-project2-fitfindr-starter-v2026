@@ -13,7 +13,7 @@
 > python app.py ask 'vintage graphic tee under $30'
 > ```
 >
-> The standalone tools are implemented. The planning loop is next.
+> The tools and planning loop are implemented. See the real sample runs below.
 >
 > **The rest of this file is your submission.** Fill it in as you go.
 
@@ -38,9 +38,11 @@
 
 ## What This Does
 
-<!-- Three or four sentences: what a user asks for, and what they get back. -->
-
-
+FitFindr searches 40 sample thrift listings from a plain-language clothing
+request, with optional size and price limits. It selects the highest-ranked
+keyword match, suggests outfits using an example wardrobe, and generates a
+short fit card with the item's price and platform. If no listing matches, it
+stops before either model call and suggests how to adjust the search.
 
 ---
 
@@ -99,22 +101,27 @@ first result in `session["selected_item"]`, call `suggest_outfit`, store its
 output, then call `create_fit_card` using the stored outfit and selected item.
 Store the card and return the session.
 
-**Where it lives:** `agent.py::run_agent` (implementation follows Milestone 3).
+**Where it lives:** `agent.py::run_agent`.
 
-**How the query is parsed:** Planned implementation uses regex, not a model.
+**How the query is parsed:** `agent.py::parse_query` uses regex, not a model.
 Extract an optional price after `under`, `below`, `up to`, or `max`, allowing an
 optional dollar sign and decimals. Extract an optional size after `size`,
 including clothing alternatives, numeric shoe sizes, waist/length sizes, and
 `One Size`. Remove the extracted phrases and use the remaining text as the
 description. Missing size or price becomes `None`; price is a `float`.
 The search ceiling is inclusive, including queries phrased as “under.”
+The parser handles one size clause and one price clause; it is not a general
+natural-language interpreter. Without the `size` keyword, size is not extracted.
+Requested alternatives such as `S/M` match either whole size alternative.
 
 **What moves through the session:** `query` and `wardrobe` start the session.
 Parsed filters go in `parsed`, then search output in `search_results`, then the
 first record in `selected_item`, then text in `outfit_suggestion`, and finally
 text in `fit_card`. Each tool reads its arguments back from the session. The
 empty-search path leaves `selected_item`, `outfit_suggestion`, and `fit_card`
-as `None`. Each step will check the loop count with `trace.check_iterations`.
+as `None`. Blank model responses stop with an explanatory error; a
+`ModelUnavailable` failure preserves prior state and returns a message about
+checking the key, model setting, and connection. Each step checks the loop count with `trace.check_iterations`.
 
 ---
 
@@ -122,7 +129,66 @@ as `None`. Each step will check the loop count with `trace.check_iterations`.
 
 **One full query**
 
-The full-query run follows in Milestone 5, after the standalone tools below.
+```bash
+$ AI201_CACHE=0 python app.py ask 'vintage graphic tee under $30'
+
+  Found:    Y2K Baby Tee — Butterfly Print — $18.0 on depop
+
+  Outfit:   Outfit 1:
+- Selected Item: Y2K Baby Tee — Butterfly Print
+- Companion Pieces: Baggy straight-leg jeans, dark wash; Chunky white sneakers
+- Style: A quintessential Y2K streetwear look that balances the fitted, cropped silhouette of the baby tee with relaxed, high-waisted denim and chunky sneakers.
+
+Outfit 2:
+- Selected Item: Y2K Baby Tee — Butterfly Print
+- Companion Pieces: Wide-leg khaki trousers; Chunky white sneakers
+- Style: A minimal, earth-toned take that pairs the vintage graphic tee with tailored wide-leg trousers for an effortless, casual aesthetic.
+
+  Fit card: This casual Y2K streetwear look pairs the Y2K Baby Tee \u2014 Butterfly Print found on depop for $18.00 with baggy straight-leg jeans in a dark wash and chunky white sneakers. The fitted, cropped silhouette of the graphic tee balances the relaxed denim for a quintessential early 2000s aesthetic. Alternatively, the vintage top can be styled with wide-leg khaki trousers and chunky white sneakers for a minimal, earth-toned take.
+
+2 model calls this session, 1206 prompt + 233 output tokens
+```
+
+**An impossible query**
+
+```bash
+$ AI201_CACHE=0 python app.py ask 'designer ballgown size XXS under $5'
+
+  No listings matched your search. Try broader description keywords, a different size, or a higher price limit.
+
+0 model calls this session
+```
+
+The instrumented live run in
+[results/milestone5-sessions.json](results/milestone5-sessions.json) records the
+complete sessions and snapshots of the actual arguments received by both model
+tools. Both received `lst_002`, the same complete listing stored in
+`session["selected_item"]`; the card tool also received the stored outfit.
+The happy path made two model calls. The impossible query made zero model calls
+and left `selected_item`, `outfit_suggestion`, and `fit_card` as `None`.
+Reproduce this evidence with `python scripts/milestone5_samples.py`.
+
+The CLI caption above contains a literal `\u2014` despite readable Unicode in
+the prompt. The raw response is preserved here rather than silently corrected.
+Model wording and formatting remain variable; the five-trial acceptance
+measurement is still reserved for Unit 4.
+
+**Empty-search message review (solo AI option)**
+
+Given only the displayed message, the next actions I would try are broader
+keywords, another size, or a higher price limit. This is an AI readability
+review, not feedback from a breakout group or a claim of personal user testing.
+The message names concrete actions a user can take.
+
+**Offline verification**
+
+`python -m unittest discover -s tests -v` passed 18 tests. The checks include
+five matching queries with snapshots of the actual tool inputs, five empty
+queries with model tools asserted uncalled, and five price ceilings with known
+matches. Model responses are mocked for these regression checks, so their
+results do not establish live-model success rates. See
+[results/milestone5-unit-tests.txt](results/milestone5-unit-tests.txt).
+
 
 **The three tools, tested one at a time**
 
@@ -173,7 +239,7 @@ samples are not the five-trial Unit 4 acceptance evaluation.
 
 ```bash
 $ AI201_CACHE=0 python -c 'from tools import suggest_outfit; from utils.data_loader import get_empty_wardrobe, load_listings; print(suggest_outfit(load_listings()[0], get_empty_wardrobe()))'
-The Vintage Levi's 501 Jeans — Medium Wash are a versatile classic with a medium wash and light fading at the knees. 
+The Vintage Levi's 501 Jeans — Medium Wash are a versatile classic with a medium wash and light fading at the knees.
 
 **Styling Ideas:**
 
@@ -202,24 +268,17 @@ Reproduce with `python scripts/milestone4_samples.py` from an activated environm
 
 ## How I Used AI
 
-<!-- Two specific moments. What you asked, what came back, what you changed.
+**Moment 1 — Specifications and criteria**
 
-     "I used Claude to help me code" is not enough.
+- *What I asked for:* Help following each milestone, identifying where my input was needed, and drafting suitable acceptance-criterion wording.
+- *What came back:* A typed tool inventory, an explicit empty-search branch rule, and draft criteria covering full runs, early stops, state, caption quality, and price limits.
+- *What I changed:* I approved the draft wording and asked for implementation. I did not independently rewrite the criteria; `criteria.md` records that they were AI-assisted and approved before implementation tests.
 
-     "I gave Claude my search_listings spec. It returned None on no match
-     instead of an empty list, so I changed it" is the level we want. -->
+**Moment 2 — Implementation and evidence**
 
-**Moment 1**
-
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
-
-**Moment 2**
-
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+- *What I asked for:* Implement the approved plan and continue the milestones.
+- *What came back:* Codex implemented the tools and session-based loop, added offline regression tests, and saved actual uncached model outputs. During sample review it found a literal escaped dash in a generated caption, changed JSON prompt formatting to preserve Unicode, and refreshed the samples.
+- *What I changed:* I delegated implementation rather than making manual code edits. The code changes and test execution described here were performed by Codex; this does not claim a peer review or a personal edit I did not make.
 
 <!-- ═══════════════════════ UNIT 4 — THE TEST ═══════════════════════
 
