@@ -131,7 +131,14 @@ def create_fit_card(outfit: str, new_item: dict) -> str:
         'once each. Describe the concrete style of the supplied outfit. '
         'Do not repeat the title, price, or platform. Do not invent a brand '
         'when none is given or claim the user purchased or owns anything. '
-        'Keep unknown details out of the caption.\nData:\n' + json.dumps(data, ensure_ascii=False)
+        'The selected item is the ONLY item for sale: attach its price and '
+        'platform explicitly to that item in one sentence, never to the outfit '
+        'or pairing. Companion pieces are styling suggestions only; never say '
+        'they are included, bundled, or available at the listed price. If the '
+        'outfit mentions the same kind of garment as the selected item (for '
+        'example, jeans), it refers to that item, not an additional garment. '
+        'Describe the styling in a separate sentence. Keep unknown details '
+        'out of the caption.\nData:\n' + json.dumps(data, ensure_ascii=False)
     )
     response = generate(prompt, system=_SYSTEM)
     return response.strip() or NO_CARD_RESPONSE
