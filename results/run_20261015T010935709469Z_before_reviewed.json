@@ -1,0 +1,109 @@
+{
+  "label": "before",
+  "caption_review": {
+    "reviewer": "Codex (AI text review; not a claim of human or peer review)",
+    "criterion": 4,
+    "rule": "Apply the existing rule that incorrect factual details fail. Only the selected jeans have a known listing, price, and platform; companion pieces are styling ideas, not included merchandise. Ambiguous bundle availability is conservatively failed and the wording is quoted for audit.",
+    "tries": [
+      {
+        "try": 1,
+        "factually_grounded": false,
+        "reason": "'This relaxed pairing is available on depop for $38.0' attaches availability and price to the pairing, although only the jeans are listed. Conservative failure for an unsupported bundle claim."
+      },
+      {
+        "try": 2,
+        "factually_grounded": true,
+        "reason": "Identifies Levi's 501 jeans, correctly describes the medium wash and light fading, and attaches the $38.00 depop listing to this piece. Sneakers are a styling combination."
+      },
+      {
+        "try": 3,
+        "factually_grounded": false,
+        "reason": "'with the included jeans and white sneakers' claims included companion pieces not present in the listing and suggests an additional pair of jeans."
+      },
+      {
+        "try": 4,
+        "factually_grounded": true,
+        "reason": "The $38.00 depop price is attached directly to the selected jeans. Blue denim and white-sneaker styling are supported."
+      },
+      {
+        "try": 5,
+        "factually_grounded": true,
+        "reason": "The listing supports faded medium-wash jeans; the price and platform refer to these bottoms, while white sneakers are only styling advice."
+      }
+    ]
+  },
+  "rows": [
+    {
+      "criterion": 1,
+      "name": "matching query completes",
+      "target": 4,
+      "passed": [
+        true,
+        true,
+        true,
+        true,
+        false
+      ],
+      "count": 4,
+      "verdict": "MET"
+    },
+    {
+      "criterion": 2,
+      "name": "impossible query stops early",
+      "target": 5,
+      "passed": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "count": 5,
+      "verdict": "MET"
+    },
+    {
+      "criterion": 3,
+      "name": "selected item preserved",
+      "target": 5,
+      "passed": [
+        true,
+        true,
+        true,
+        true,
+        false
+      ],
+      "count": 4,
+      "verdict": "MISSED"
+    },
+    {
+      "criterion": 4,
+      "name": "short grounded fit card",
+      "target": 4,
+      "passed": [
+        false,
+        true,
+        false,
+        true,
+        true
+      ],
+      "count": 3,
+      "verdict": "MISSED"
+    },
+    {
+      "criterion": 5,
+      "name": "inclusive price ceiling",
+      "target": 5,
+      "passed": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "count": 5,
+      "verdict": "MET"
+    }
+  ],
+  "raw_report": "results/run_20261015T010935709469Z_before.json",
+  "review_source": "results/before-caption-review.json"
+}

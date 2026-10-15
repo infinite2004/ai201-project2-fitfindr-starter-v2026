@@ -1,0 +1,12 @@
+{
+  "reviewer": "Codex (AI text review; not a claim of human or peer review)",
+  "criterion": 4,
+  "rule": "Apply the existing rule that incorrect factual details fail. Only the selected jeans have a known listing, price, and platform; companion pieces are styling ideas, not included merchandise. Ambiguous bundle availability is conservatively failed and the wording is quoted for audit.",
+  "tries": [
+    {"try": 1, "factually_grounded": false, "reason": "'This relaxed pairing is available on depop for $38.0' attaches availability and price to the pairing, although only the jeans are listed. Conservative failure for an unsupported bundle claim."},
+    {"try": 2, "factually_grounded": true, "reason": "Identifies Levi's 501 jeans, correctly describes the medium wash and light fading, and attaches the $38.00 depop listing to this piece. Sneakers are a styling combination."},
+    {"try": 3, "factually_grounded": false, "reason": "'with the included jeans and white sneakers' claims included companion pieces not present in the listing and suggests an additional pair of jeans."},
+    {"try": 4, "factually_grounded": true, "reason": "The $38.00 depop price is attached directly to the selected jeans. Blue denim and white-sneaker styling are supported."},
+    {"try": 5, "factually_grounded": true, "reason": "The listing supports faded medium-wash jeans; the price and platform refer to these bottoms, while white sneakers are only styling advice."}
+  ]
+}
