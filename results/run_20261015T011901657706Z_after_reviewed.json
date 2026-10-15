@@ -1,0 +1,109 @@
+{
+  "label": "after",
+  "caption_review": {
+    "reviewer": "Codex (AI text review; not a claim of human or peer review)",
+    "criterion": 4,
+    "rule": "Apply the existing rule that incorrect factual details fail. Only the selected jeans have a known listing, price, and platform; companion pieces are styling ideas, not included merchandise. Ambiguous bundle availability is conservatively failed and the wording is quoted for audit.",
+    "tries": [
+      {
+        "try": 1,
+        "factually_grounded": true,
+        "reason": "Price and depop availability refer explicitly to the selected jeans. Medium wash and knee fading are in the listing; white sneakers are a separate styling suggestion."
+      },
+      {
+        "try": 2,
+        "factually_grounded": true,
+        "reason": "The first sentence attaches $38.00 and depop to the named jeans. Blue denim and knee fading are supported; the final sentence suggests white sneakers without inclusion claims."
+      },
+      {
+        "try": 3,
+        "factually_grounded": true,
+        "reason": "The selected jeans are offered at the correct price and platform; the second sentence describes styling with white sneakers, not a bundle."
+      },
+      {
+        "try": 4,
+        "factually_grounded": true,
+        "reason": "The jeans alone have the price/platform. The two other sentences describe the outfit and do not invent merchandise, ownership, or item facts."
+      },
+      {
+        "try": 5,
+        "factually_grounded": true,
+        "reason": "Availability and $38.00 are attached to the jeans. Pairing with white sneakers is described as an outfit, not included clothing."
+      }
+    ]
+  },
+  "rows": [
+    {
+      "criterion": 1,
+      "name": "matching query completes",
+      "target": 4,
+      "passed": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "count": 5,
+      "verdict": "MET"
+    },
+    {
+      "criterion": 2,
+      "name": "impossible query stops early",
+      "target": 5,
+      "passed": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "count": 5,
+      "verdict": "MET"
+    },
+    {
+      "criterion": 3,
+      "name": "selected item preserved",
+      "target": 5,
+      "passed": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "count": 5,
+      "verdict": "MET"
+    },
+    {
+      "criterion": 4,
+      "name": "short grounded fit card",
+      "target": 4,
+      "passed": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "count": 5,
+      "verdict": "MET"
+    },
+    {
+      "criterion": 5,
+      "name": "inclusive price ceiling",
+      "target": 5,
+      "passed": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "count": 5,
+      "verdict": "MET"
+    }
+  ],
+  "raw_report": "results/run_20261015T011901657706Z_after.json",
+  "review_source": "results/after-caption-review.json"
+}

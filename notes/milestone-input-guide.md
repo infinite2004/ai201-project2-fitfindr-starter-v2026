@@ -56,6 +56,13 @@ that output is preserved as evidence of model formatting variability. Search
 uses keyword overlap, so partial matches can appear below stronger matches.
 The parser expects explicit size and price phrases, not arbitrary language.
 
-Unit 4's five-trial live evaluation, MCP integration, before/after diagnosis,
-and improvement sections remain unfilled. Those are later milestones, not
-results that can be inferred from these implementation tests.
+The new submission's before/after evaluation and all six requested README
+sections are now complete. The README shows three trials plus two supplemental
+trials to apply the unchanged five-trial targets. Before: criteria 3 and 4
+missed; after: all five met their targets in this sample. Caption verdicts include
+an explicitly labelled AI text review, with every decision saved in results/.
+
+Before submitting, read the AI-assisted reflection and the quoted caption
+review decisions. You can add your own observations; no personal or peer review
+has been claimed on your behalf. The submission URL is the existing Project 2
+repository. Nothing has been submitted to a course portal from this workspace.
