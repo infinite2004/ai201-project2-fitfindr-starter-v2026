@@ -1,0 +1,16 @@
+test_blank_responses_are_explicit (test_tools.GenerationTests.test_blank_responses_are_explicit) ... ok
+test_card_receives_outfit_and_listing (test_tools.GenerationTests.test_card_receives_outfit_and_listing) ... ok
+test_empty_inputs_do_not_call_model (test_tools.GenerationTests.test_empty_inputs_do_not_call_model) ... ok
+test_empty_wardrobe_asks_for_general_advice (test_tools.GenerationTests.test_empty_wardrobe_asks_for_general_advice) ... ok
+test_model_failure_is_not_disguised_as_success (test_tools.GenerationTests.test_model_failure_is_not_disguised_as_success) ... ok
+test_populated_wardrobe_reaches_adapter_without_mutating_inputs (test_tools.GenerationTests.test_populated_wardrobe_reaches_adapter_without_mutating_inputs) ... ok
+test_all_three_filters_together (test_tools.SearchTests.test_all_three_filters_together) ... ok
+test_empty_and_impossible_queries (test_tools.SearchTests.test_empty_and_impossible_queries) ... ok
+test_price_ceilings_include_known_items (test_tools.SearchTests.test_price_ceilings_include_known_items) ... ok
+test_ranking_stability_limit_and_null_brand (test_tools.SearchTests.test_ranking_stability_limit_and_null_brand) ... ok
+test_size_boundaries_and_alternatives (test_tools.SearchTests.test_size_boundaries_and_alternatives) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.003s
+
+OK

@@ -13,8 +13,7 @@
 > python app.py ask 'vintage graphic tee under $30'
 > ```
 >
-> All three tools are stubs, so that last command will do nothing useful yet.
-> That's the starting position.
+> The standalone tools are implemented. The planning loop is next.
 >
 > **The rest of this file is your submission.** Fill it in as you go.
 
@@ -121,34 +120,83 @@ as `None`. Each step will check the loop count with `trace.check_iterations`.
 
 ## Sample Run
 
-<!-- Two things go here.
-
-     1. One FULL query and its output, pasted as text.
-     2. Your three per-tool terminal tests — the command and what it printed. -->
-
 **One full query**
 
-```
-$ python app.py ask '...'
-
-```
+The full-query run follows in Milestone 5, after the standalone tools below.
 
 **The three tools, tested one at a time**
 
-```
-$ python -c "from tools import search_listings; print(search_listings('graphic tee', max_price=30))"
+The following are actual terminal commands and outputs. `AI201_CACHE=0`
+disables cached answers; `TEMPERATURE` remains 0.9. The search display shows
+ID, title, size, price, and platform; the function returns full listing dicts.
 
+```bash
+$ AI201_CACHE=0 python -c 'from tools import search_listings; print([(x['"'"'id'"'"'], x['"'"'title'"'"'], x['"'"'size'"'"'], x['"'"'price'"'"'], x['"'"'platform'"'"']) for x in search_listings('"'"'graphic tee'"'"', size='"'"'M'"'"', max_price=30)])'
+[('lst_002', 'Y2K Baby Tee — Butterfly Print', 'S/M', 18.0, 'depop'), ('lst_017', 'Mesh Long-Sleeve Top — Black', 'S/M', 15.0, 'depop')]
 ```
 
-```
-$ python -c "from tools import suggest_outfit; ..."
+```bash
+$ AI201_CACHE=0 python -c 'from tools import suggest_outfit; from utils.data_loader import get_example_wardrobe, load_listings; print(suggest_outfit(load_listings()[0], get_example_wardrobe()))'
+**Outfit 1:**
+* **Selected Item:** Vintage Levi's 501 Jeans — Medium Wash
+* **Companion Pieces:** White ribbed tank top, Vintage black denim jacket, Chunky white sneakers, Black crossbody bag
+* **Style:** Casual Streetwear. This look pairs the classic vintage denim with a fitted basic top and a slightly cropped jacket, finished off with chunky sneakers and a minimal crossbody bag for an effortless, everyday vibe.
 
+**Outfit 2:**
+* **Selected Item:** Vintage Levi's 501 Jeans — Medium Wash
+* **Companion Pieces:** Oversized grey crewneck sweatshirt, Black combat boots, Brown leather belt
+* **Style:** Cozy Grunge. The relaxed, oversized grey sweatshirt contrasts with the structure of the straight-leg 501s and the edgy lace-up boots, pulled together with a classic brown leather belt.
 ```
 
+```bash
+$ AI201_CACHE=0 python -c 'from tools import create_fit_card; from utils.data_loader import load_listings; print(create_fit_card('"'"'jeans and white sneakers'"'"', load_listings()[0]))'
+Pair the Vintage Levi's 501 Jeans — Medium Wash with clean white sneakers for a classic, effortless streetwear look. The faded indigo denim brings an authentic vintage feel to the casual outfit. Find this piece on depop for $38.00.
 ```
-$ python -c "from tools import create_fit_card; ..."
 
+**Same fit-card input, two additional uncached runs**
+
+```bash
+$ AI201_CACHE=0 python -c 'from tools import create_fit_card; from utils.data_loader import load_listings; print(create_fit_card('"'"'jeans and white sneakers'"'"', load_listings()[0]))'
+This casual streetwear fit pairs the Vintage Levi's 501 Jeans — Medium Wash with clean white sneakers. The classic denim features light fading at the knees for an authentic worn-in look. You can find this piece for $38.0 on depop.
 ```
+
+```bash
+$ AI201_CACHE=0 python -c 'from tools import create_fit_card; from utils.data_loader import load_listings; print(create_fit_card('"'"'jeans and white sneakers'"'"', load_listings()[0]))'
+The Vintage Levi's 501 Jeans — Medium Wash are listed on depop for $38.0. This classic streetwear outfit pairs the blue denim bottoms with casual white sneakers. The light fading at the knees enhances the vintage aesthetic of the look.
+```
+
+All three captions differ. Each has three sentences, identifies the same
+Levi's jeans, and mentions the $38 price and depop once. These three build
+samples are not the five-trial Unit 4 acceptance evaluation.
+
+**Empty cases**
+
+```bash
+$ AI201_CACHE=0 python -c 'from tools import suggest_outfit; from utils.data_loader import get_empty_wardrobe, load_listings; print(suggest_outfit(load_listings()[0], get_empty_wardrobe()))'
+The Vintage Levi's 501 Jeans — Medium Wash are a versatile classic with a medium wash and light fading at the knees. 
+
+**Styling Ideas:**
+
+1. **Casual Streetwear:** Pair the jeans with a tucked-in graphic tee and a leather belt to highlight the vintage fit. Consider adding a classic canvas sneaker and a unstructured tote bag as suggestion pieces.
+2. **Layered Neutral:** Style the denim with an oversized knit sweater half-tucked at the waist. Consider adding a tailored trench coat and leather loafers as suggestion pieces to elevate the look.
+```
+
+```bash
+$ AI201_CACHE=0 python -c 'from tools import search_listings; print(search_listings('"'"'designer ballgown'"'"', size='"'"'XXS'"'"', max_price=5))'
+[]
+```
+
+```bash
+$ AI201_CACHE=0 python -c 'from tools import create_fit_card; from utils.data_loader import load_listings; print(create_fit_card('"'"'   '"'"', load_listings()[0]))'
+No outfit suggestion available. Generate an outfit before creating a fit card.
+```
+
+The empty wardrobe gets suggestions without claiming the pieces are owned.
+The impossible search returns `[]`. A missing outfit returns a useful message
+without a model call. Eleven offline regression tests also passed; their
+output is in [results/milestone4-unit-tests.txt](results/milestone4-unit-tests.txt).
+Raw sample output is in [results/milestone4-tools.json](results/milestone4-tools.json).
+Reproduce with `python scripts/milestone4_samples.py` from an activated environment.
 
 ---
 

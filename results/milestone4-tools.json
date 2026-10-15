@@ -1,0 +1,58 @@
+[
+  {
+    "label": "search",
+    "command": "AI201_CACHE=0 python -c 'from tools import search_listings; print([(x['\"'\"'id'\"'\"'], x['\"'\"'title'\"'\"'], x['\"'\"'size'\"'\"'], x['\"'\"'price'\"'\"'], x['\"'\"'platform'\"'\"']) for x in search_listings('\"'\"'graphic tee'\"'\"', size='\"'\"'M'\"'\"', max_price=30)])'",
+    "stdout": "[('lst_002', 'Y2K Baby Tee \u2014 Butterfly Print', 'S/M', 18.0, 'depop'), ('lst_017', 'Mesh Long-Sleeve Top \u2014 Black', 'S/M', 15.0, 'depop')]\n",
+    "stderr": "",
+    "exit_code": 0
+  },
+  {
+    "label": "outfit",
+    "command": "AI201_CACHE=0 python -c 'from tools import suggest_outfit; from utils.data_loader import get_example_wardrobe, load_listings; print(suggest_outfit(load_listings()[0], get_example_wardrobe()))'",
+    "stdout": "**Outfit 1:**\n* **Selected Item:** Vintage Levi's 501 Jeans \u2014 Medium Wash\n* **Companion Pieces:** White ribbed tank top, Vintage black denim jacket, Chunky white sneakers, Black crossbody bag\n* **Style:** Casual Streetwear. This look pairs the classic vintage denim with a fitted basic top and a slightly cropped jacket, finished off with chunky sneakers and a minimal crossbody bag for an effortless, everyday vibe.\n\n**Outfit 2:**\n* **Selected Item:** Vintage Levi's 501 Jeans \u2014 Medium Wash\n* **Companion Pieces:** Oversized grey crewneck sweatshirt, Black combat boots, Brown leather belt\n* **Style:** Cozy Grunge. The relaxed, oversized grey sweatshirt contrasts with the structure of the straight-leg 501s and the edgy lace-up boots, pulled together with a classic brown leather belt.\n",
+    "stderr": "",
+    "exit_code": 0
+  },
+  {
+    "label": "card_1",
+    "command": "AI201_CACHE=0 python -c 'from tools import create_fit_card; from utils.data_loader import load_listings; print(create_fit_card('\"'\"'jeans and white sneakers'\"'\"', load_listings()[0]))'",
+    "stdout": "Pair the Vintage Levi's 501 Jeans \u2014 Medium Wash with clean white sneakers for a classic, effortless streetwear look. The faded indigo denim brings an authentic vintage feel to the casual outfit. Find this piece on depop for $38.00.\n",
+    "stderr": "",
+    "exit_code": 0
+  },
+  {
+    "label": "card_2",
+    "command": "AI201_CACHE=0 python -c 'from tools import create_fit_card; from utils.data_loader import load_listings; print(create_fit_card('\"'\"'jeans and white sneakers'\"'\"', load_listings()[0]))'",
+    "stdout": "This casual streetwear fit pairs the Vintage Levi's 501 Jeans \u2014 Medium Wash with clean white sneakers. The classic denim features light fading at the knees for an authentic worn-in look. You can find this piece for $38.0 on depop.\n",
+    "stderr": "",
+    "exit_code": 0
+  },
+  {
+    "label": "card_3",
+    "command": "AI201_CACHE=0 python -c 'from tools import create_fit_card; from utils.data_loader import load_listings; print(create_fit_card('\"'\"'jeans and white sneakers'\"'\"', load_listings()[0]))'",
+    "stdout": "The Vintage Levi's 501 Jeans \u2014 Medium Wash are listed on depop for $38.0. This classic streetwear outfit pairs the blue denim bottoms with casual white sneakers. The light fading at the knees enhances the vintage aesthetic of the look.\n",
+    "stderr": "",
+    "exit_code": 0
+  },
+  {
+    "label": "empty_wardrobe",
+    "command": "AI201_CACHE=0 python -c 'from tools import suggest_outfit; from utils.data_loader import get_empty_wardrobe, load_listings; print(suggest_outfit(load_listings()[0], get_empty_wardrobe()))'",
+    "stdout": "The Vintage Levi's 501 Jeans \u2014 Medium Wash are a versatile classic with a medium wash and light fading at the knees. \n\n**Styling Ideas:**\n\n1. **Casual Streetwear:** Pair the jeans with a tucked-in graphic tee and a leather belt to highlight the vintage fit. Consider adding a classic canvas sneaker and a unstructured tote bag as suggestion pieces.\n2. **Layered Neutral:** Style the denim with an oversized knit sweater half-tucked at the waist. Consider adding a tailored trench coat and leather loafers as suggestion pieces to elevate the look.\n",
+    "stderr": "",
+    "exit_code": 0
+  },
+  {
+    "label": "empty_search",
+    "command": "AI201_CACHE=0 python -c 'from tools import search_listings; print(search_listings('\"'\"'designer ballgown'\"'\"', size='\"'\"'XXS'\"'\"', max_price=5))'",
+    "stdout": "[]\n",
+    "stderr": "",
+    "exit_code": 0
+  },
+  {
+    "label": "empty_outfit",
+    "command": "AI201_CACHE=0 python -c 'from tools import create_fit_card; from utils.data_loader import load_listings; print(create_fit_card('\"'\"'   '\"'\"', load_listings()[0]))'",
+    "stdout": "No outfit suggestion available. Generate an outfit before creating a fit card.\n",
+    "stderr": "",
+    "exit_code": 0
+  }
+]
